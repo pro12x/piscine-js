@@ -33,4 +33,8 @@ const nested = {
         'bool' : true
     },
 }
+
+Object.freeze(nested)
+Object.freeze(nested.arr)
+Object.freeze(nested.obj)
 //console.log(escapeStr, arr, obj, nested)
