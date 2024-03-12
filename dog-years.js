@@ -26,7 +26,7 @@ function dogYears(planet = "earth", age = 0) {
     const uranusSecond = earthSecond * 84.016846
     const neptuneSecond = earthSecond * 164.79132
 
-    switch (planet)
+    switch (planet.toLowerCase())
     {
         case "earth":
         {
@@ -73,7 +73,7 @@ function dogYears(planet = "earth", age = 0) {
             years = 0;
         }
     }
-    return (years * 7).toFixed(2).toString()
+    return parseFloat((years * 7).toFixed(2))
 }
 
 //console.log(dogYears("earth", 1000000000))
