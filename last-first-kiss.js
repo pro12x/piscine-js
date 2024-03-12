@@ -17,7 +17,7 @@ function last(arr)
 
 function kiss(arr)
 {
-    return [first(arr), last(arr)]
+    return [last(arr), first(arr)]
 }
 
 //console.log(first("Franchis Janel"), last("Franchis Janel"), kiss("Franchis Janel"))
