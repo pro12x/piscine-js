@@ -6,6 +6,6 @@
     return arg1 + arg2
 }*/
 
-const concatStr = (arg1, arg2) => arg1 + arg2
+const concatStr = (arg1, arg2) => arg1 + "" + arg2
 
-//console.log(concatStr("Franchis", 12))
+//console.log(concatStr(1, 2))
