@@ -4,11 +4,11 @@
     You must find a way to keep the original values of clone1 and clone2. The values of samePerson should change when person is changed.
 */
 
-const person = {
+/*const person = {
     name: 'Rick',
     age: 77,
     country: 'US',
-}
+}*/
 
 // Create three copies of the person object named clone1, clone2 and samePerson.
 const clone1 = {...person}
@@ -18,4 +18,4 @@ const samePerson = person
 person.age++
 person.country = 'FR'
 
-console.log("Person: ", person, "\nClone 1: ", clone1, "\nClone 2: ", clone2, "\nSame Person: ", samePerson)
+//console.log("Person: ", person, "\nClone 1: ", clone1, "\nClone 2: ", clone2, "\nSame Person: ", samePerson)
