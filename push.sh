@@ -1,3 +1,4 @@
+clear
 git init
 git add .
 git commit -m "Piscine-JS-2"
