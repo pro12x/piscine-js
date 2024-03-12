@@ -10,6 +10,13 @@
     country: 'US',
 }*/
 
+/*
+    Pour cloner un objet, il existe trois façon de le faire.
+    1. {...ObjectName}
+    2. Objec.assign({}, ObjectName)
+    3. JSON.stringify ...
+ */
+
 // Create three copies of the person object named clone1, clone2 and samePerson.
 const clone1 = {...person}
 const clone2 = Object.assign({}, person)
