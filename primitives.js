@@ -5,6 +5,7 @@
     bool for boolean
     undef for undefined
  */
+
 const str = "Franchis"
 const num = 12
 const bool = true
