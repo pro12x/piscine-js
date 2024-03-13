@@ -1,5 +1,5 @@
 clear
-git init
+#git init
 git add .
 git commit -m "Piscine-JS-2"
 #git remote add origin1 https://learn.zone01dakar.sn/git/fmokomba/piscine-js-2.git
