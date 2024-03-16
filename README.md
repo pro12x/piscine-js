@@ -42,7 +42,7 @@
 
 ### FIND
 1. **[its-a-match](./its-a-match.js)**
-2. **[letter-space-numbers](./letter-space-numbers.js)**
+2. **[letter-space-number](./letter-space-number.js)**
 3. **[vowel-dots](./vowel-dots.js)**
 4. **[same-amount](./same-amount.js)**
 5. **[ion-out](./ion-out.js)**
