@@ -41,19 +41,36 @@ const floor = (num = 0) => {
     return (mod >= 5) ? ((num >= 0) ? count : -(count + 1)) : ((num >= 0) ? count : -(count + 1))
 }
 
+const int = (num) => {
+    let sign = Math.sign(num)
+    if(num < 0) {
+        num = num * -10
+    } else {
+        num = 10 * num
+    }
+    let count = 0
+    while (num >= 10) {
+        num -= 10
+        count++
+    }
+    return [num, count]
+}
+
 /**
  * @param num
  * @returns {number|number}
  */
 const trunc = (num = 0) => {
-    let mod = (num > 0) ? num * 10 : -10 * num
-    let count = 0
-
-    while (mod >= 10) {
-        mod -= 10
-        count++
+    if (num <= 0xfffffffff) {
+        let sign = Math.sign(num)
+        let arr = int(num)
+        return sign * arr[1]
+    } else {
+        let greater = num - 0xfffffffff
+        let sign = Math.sign(greater)
+        let arr = int(greater)
+        return sign * arr[1] + 0xfffffffff
     }
-    return (num >= 0) ? count : -count
 }
 
 /**
@@ -71,5 +88,5 @@ const ceil = (num = 0) => {
     return (num >= 0) ? ((mod === 0) ? count : count + 1) : ((mod === 0) ? -count : -count)
 }
 
-//const num = [4, -3, 3, -2, 0] //
-//console.log(num.map(ceil))
+//console.log(trunc( 5.8))
+//console.log(trunc(0xfffffffff + 5))

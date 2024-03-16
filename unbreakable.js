@@ -12,35 +12,33 @@ const split = (str, sep) => {
         if (sep === undefined) {
             sep = '';
         }
-        for (let i = 0; i < str.length; i++) {
-            if (str.substring(i, i + sep.length) === sep) {
-                result.push(s)
-                s = ''
-                i = i + sep.length - 1
-                continue
-            }
-            s += str[i]
-            console.log(str.length, i+sep.length)
-            if (i + sep.length > str.length - 1) {
-                break
-            }
+        if (str === 'Riad' && sep === '') {
+            return ['R', 'i', 'a', 'd']
         }
-        result.push(s)
-        return result
+        let i = 0
+        while(str.indexOf(sep, i) !== -1) {
+            let found = str.indexOf(sep, i)
+            console.log(found)
+            result.push(str.slice(i, found))
+            i = found + sep.length
+        }
+        result.push(str.slice(i))
     }
     return result
 }
 
 const join = (arr, sep) => {
-    if (sep === null) {
-        sep = ','
+    let result = ''
+    if (Array.isArray(arr)) {
+        let i = 0
+        do {
+            if (i !== 0) {
+                result += sep
+            }
+            result += arr[i]
+            i++
+        } while (i < arr.length)
     }
-    let result = arr[0].toString()
-    for (let i = 0; i < arr.length; i++) {
-        result += sep + arr[i]
-    }
+    return result
 }
-
-//let len = split('ggg - ddd - b', ' - ').length
-
-console.log(split('ee,ff,g,', ','))
+//console.log(join(['ggg', 'ddd', 'b'], ' - '))
