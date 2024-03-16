@@ -11,23 +11,19 @@
 */
 
 const flat = (arr, depth) => {
-    if (!Array.isArray(arr)) {
-        throw new TypeError('Expected an array');
+    if (Array.isArray(arr) && depth !== 0) {
+        depth = (depth === undefined) ? 1 : depth
+        return arr.reduce((accumulator, currentTable) => {
+            return accumulator.concat(flat(currentTable, depth - 1));
+        }, [])
     }
-
-    if (depth <= 0) {
-        return arr.slice();
-    }
-
-    const result = [];
-
-    for (const element of arr) {
-        if (Array.isArray(element)) {
-            result.push(...flat(element, depth - 1));
-        } else {
-            result.push(element);
-        }
-    }
-
-    return result;
+    return arr
 }
+
+//console.log("========= My Work ===========")
+//console.log(flat([1])) // [1]
+//console.log(flat([1, [2]])) // [1, 2]
+//console.log(flat([1, [2, [3]]])) // [1, 2, [3]]
+//console.log(flat([1, [2, [3], [4, [5]]]], 2)) // [1, 2, 3, 4, [5]]
+//console.log(flat([1, [2, [3], [4, [5]]]], 3)) // [1, 2, 3, 4, 5]
+//console.log(flat([1, [2, [3], [4, [5]]]], Infinity)) // [1, 2, 3, 4, 5]
