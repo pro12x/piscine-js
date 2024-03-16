@@ -11,7 +11,7 @@ For example, for the number 8, you must first multiply by 2 twice, and then add 
 //const mul2 = '*2'
 
 const findExpression = (num) => {
-    for (let i = 0; i < 4000; i++) {
+    for (let i = 0; i < 40000; i++) {
         let copy = 1
         let sequence = "1"
 
