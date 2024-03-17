@@ -4,7 +4,6 @@
 
 const ionOut = (str) => {
     if (typeof str === 'string') {
-        //console.log('here')
         let regex = /\w*tion\w*/g
         return (str.match(regex)) ? (str.match(regex).map(occurence => occurence.replace('ion', ''))) : []
     }
