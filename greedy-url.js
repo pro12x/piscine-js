@@ -21,14 +21,25 @@ const getURL = (dataSet) => {
 }
 const greedyQuery = (dataSet) => {
     if (typeof dataSet === 'string') {
-        const greedyQueryRegex = /(https?:\/\/[^\s]+(\?[^\s&]+&[^\s&]+&[^\s&]+.*))/g;
-        return dataSet.match(greedyQueryRegex) || []
+        dataSet = getURL(dataSet)
+        let regex = /\?([-a-zA-Z0-9\[\],()@]*=[-a-zA-Z0-9\[\],()@]*&){2,255}([-a-zA-Z0-9\[\],()@]*=[-a-zA-Z0-9\[\],()@]*)/g
+        return dataSet.filter((link) => {
+            return link.match(regex) !== null
+        })
     }
+    return []
 }
 const notSoGreedy = (dataSet) => {
     if (typeof dataSet === 'string') {
-        //
+        dataSet = getURL(dataSet)
+        let regex = /\?([-a-zA-Z0-9\[\],()@%]*=[-a-zA-Z0-9\[\],()@%]*&){1,2}([-a-zA-Z0-9\[\],()@%]*=[-a-zA-Z0-9\[\],()@%]*)$/g
+        return dataSet.filter((link) => {
+            return link.match(regex) !== null
+        })
     }
+    return []
 }
 
 //console.log(getURL(dataSet))
+//console.log(greedyQuery(dataSet))
+//console.log(notSoGreedy(dataSet))
