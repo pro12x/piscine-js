@@ -1,6 +1,6 @@
 /*
     Implement 2 functions:
-        split that works like String.split, but takes the string as its first argument.
+        splitPuzzle that works like String.splitPuzzle, but takes the string as its first argument.
         join that works like Array.join, but take the array as its first argument.
 */
 

@@ -50,4 +50,12 @@
 7. **[group-price](./group-price.js)**
 8. **[valid-ip](./valid-ip.js)**
 
+### TIME
+1. **[dr-strange](./dr-strange.js)**
+2. **[date-is](./date-is.js)**
+3. **[get-some-time](./get-some-time.js)**
+4. **[rebecca-black]](./rebecca-black.js)**
+5. **[match-cron](./match-cron.js)**
+6. 
+
 ### CROSSWORD
