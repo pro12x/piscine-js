@@ -61,4 +61,7 @@
 8. **[sunny-sunday](./sunny-sunday.js)**
 9. **[unicode-technical-report-35](./unicode-technical-report-35.js)**
 
+### CALL-ME-MAYBE
+1. **[using-map](./using-map.js)**
+
 ### CROSSWORD
