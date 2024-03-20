@@ -54,8 +54,11 @@
 1. **[dr-strange](./dr-strange.js)**
 2. **[date-is](./date-is.js)**
 3. **[get-some-time](./get-some-time.js)**
-4. **[rebecca-black]](./rebecca-black.js)**
+4. **[rebecca-black](./rebecca-black.js)**
 5. **[match-cron](./match-cron.js)**
-6. 
+6. **[count-leap-years](./count-leap-years.js)**
+7. **[day-of-the-year](./day-of-the-year.js)**
+8. **[sunny-sunday](./sunny-sunday.js)**
+9. **[unicode-technical-report-35](./unicode-technical-report-35.js)**
 
 ### CROSSWORD
