@@ -61,6 +61,9 @@
 8. **[sunny-sunday](./sunny-sunday.js)**
 9. **[unicode-technical-report-35](./unicode-technical-report-35.js)**
 
+### CROSSWORD
+1. **[crossword (Teamwork)](https://learn.zone01dakar.sn/git/npouille/crossword)**
+
 ### CALL-ME-MAYBE
 1. **[using-map](./using-map.js)**
 2. **[using-filter](./using-filter.js)**
@@ -74,9 +77,6 @@
 10. **[has-city](./has-city.js)**
 11. **[flow](./flow.js)**
 12. **[currify](./currify.js)**
-
-### CROSSWORD
-1. **[crossword (Teamwork)](https://learn.zone01dakar.sn/git/npouille/crossword)**
 
 ### Credits
 ###### &copy; ***Franchis Janel MOKOMBA*** Powered by ***Zone01 Dakar***
