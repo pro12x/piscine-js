@@ -63,5 +63,20 @@
 
 ### CALL-ME-MAYBE
 1. **[using-map](./using-map.js)**
+2. **[using-filter](./using-filter.js)**
+3. **[using-reduce](./using-reduce.js)**
+4. **[long-words](./long-words.js)**
+5. **[for-each](./for-each.js)**
+6. **[mapper](./mapper.js)**
+7. **[filter](./filter.js)**
+8. **[reduce](./reduce.js)**
+9. **[sweet-curry](./sweet-curry.js)**
+10. **[has-city](./has-city.js)**
+11. **[flow](./flow.js)**
+12. **[currify](./currify.js)**
 
 ### CROSSWORD
+1. **[crossword (Teamwork)](https://learn.zone01dakar.sn/git/npouille/crossword)**
+
+### Credits
+###### &copy; ***Franchis Janel MOKOMBA*** Powered by ***Zone01 Dakar***
