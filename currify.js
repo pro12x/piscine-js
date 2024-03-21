@@ -9,8 +9,21 @@
         // (same result, with a function that has technically only one argument)
  */
 
-const currify = (f = () => {}) => {
+/*const currify = (f = () => {}) => {
     return (...args) => {
-        return (args.length >= f.length) ? f(...args) : (f).bind(null,...args)
+        return (args.length === f.length) ? f(...args) : (f).bind(null,...args)
+    }
+}*/
+
+const currify = (f) => {
+    if (typeof f === 'function') {
+        return function curried(...args) {
+            return (args.length >= f.length) ? f.apply(this, args) : ((...innerArgs) => {return curried.apply(this, args.concat(innerArgs))})
+        }
     }
 }
+
+//const mult2 = (el1, el2) => el1 * el2
+//console.log(mult2(2, 2)) // result expected 4
+//const mult2Curried = currify(mult2)
+//console.log(mult2Curried(2)(2)) // result expected 4
