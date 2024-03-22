@@ -78,5 +78,7 @@
 11. **[flow](./flow.js)**
 12. **[currify](./currify.js)**
 
+### DOM
+
 ### Credits
 ###### &copy; ***Franchis Janel MOKOMBA*** Powered by ***Zone01 Dakar***
