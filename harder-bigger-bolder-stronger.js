@@ -9,19 +9,24 @@
         font-weight has to be 300 for the first third of the letters, 400 for the second third, and 600 for the last third.
  */
 
-export const generateLetters = () => {
-    let weight = 300
+export function generateLetters() {
+    let alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let body = document.querySelector('body')
+    let fWeight = 300;
     for (let i = 11; i < 131; i++) {
-        let char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(Math.floor(Math.random() *26))
-        let elem = document.createElement('div')
-        elem.textContent = char
-        elem.style.fontSize = i+'px'
-        elem.style.fontWeight = weight
-        document.body.appendChild(elem);
-        if (i === 51) {
-            weight += 100
-        } else if (i === 91) {
-            weight += 200
+        if (i < 51) {
+            fWeight = 300;
         }
+        else if (i < 91) {
+            fWeight = 400;
+        }
+        else {
+            fWeight = 600;
+        }
+        let res = document.createElement('div');
+        let char = alph.charAt(Math.random() * res.length);
+        res.textContent = char;
+        res.setAttribute("style", "font-size:" + i + "px; font-weight: " + fWeight + ";")
+        body.appendChild(res);
     }
 }
