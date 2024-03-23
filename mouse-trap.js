@@ -25,6 +25,7 @@ class Circle {
         this.draw();
         circles.push(this);
     }
+
     // "Draws" the circle by creating a div and appending it to the body
     draw() {
         this.HTML = document.createElement("div");
@@ -36,6 +37,7 @@ class Circle {
         this.trapped();
         document.body.appendChild(this.HTML);
     }
+
     // Moves the circle to the given x and y coordinates
     move(x, y) {
         this.trapped();
@@ -61,6 +63,7 @@ class Circle {
             }
         }
     }
+
     // Checks if the circle is inside the box
     trapped() {
         if (
@@ -76,6 +79,7 @@ class Circle {
             this.HTML.style.background = "white";
         }
     }
+
     // Checks if the given x and y coordinates for the circle are inside the box
     inReactangle(x, y) {
         if (
@@ -100,9 +104,9 @@ class Box {
         this.HTML.style.left = "50%";
         this.HTML.style.transform = "translate(-50%, -50%)";
         document.body.appendChild(this.HTML);
-        this.x = this.HTML.offsetLeft - this.HTML.offsetWidth / 2 - 1; // -1 to account for the border
+        this.x = this.HTML.offsetLeft - this.HTML.offsetWidth / 2 - 1;
         this.y = this.HTML.offsetTop - this.HTML.offsetHeight / 2 - 1;
-        this.width = this.HTML.offsetWidth + 1; // +1 to account for the border
+        this.width = this.HTML.offsetWidth + 1;
         this.height = this.HTML.offsetHeight + 1;
     }
 }
@@ -115,18 +119,16 @@ document.body.addEventListener("mousemove", (e) => {
     moveCircle(e);
 });
 
-function createCircle(e) {
+export function createCircle(e) {
     if (e === undefined) return;
     new Circle(e.clientX - 25, e.clientY - 25);
 }
 
-function moveCircle(e) {
+export function moveCircle(e) {
     if (e === undefined || circles.length === 0) return;
     circles[circles.length - 1].move(e.clientX - 25, e.clientY - 25);
 }
 
-function setBox() {
+export function setBox() {
     box = new Box();
 }
-
-export { createCircle, moveCircle, setBox };
