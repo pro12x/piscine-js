@@ -27,8 +27,10 @@
         Click 6 --> <button class="button"></button>
  */
 
-import { styles } from './pimp-my-style.data.js'
+import {styles} from './pimp-my-style.data.js'
+
 let click = 0
+
 export function pimp() {
     let button = document.querySelector('button')
     if (button.classList.contains('unpimp')) {
