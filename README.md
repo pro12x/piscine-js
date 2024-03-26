@@ -79,6 +79,37 @@
 12. **[currify](./currify.js)**
 
 ### DOM
+1. **[get-them-all](./get-them-all.js)**
+2. **[build-brick-and-break](./build-brick-and-break.js)**
+3. **[harder-bigger-bolder-stronger](./harder-bigger-bolder-stronger.js)**
+4. **[pimp-my-style](./pimp-my-style.js)**
+5. **[fifty-shades-of-cold](./fifty-shades-of-cold.js)**
+6. **[keycodes-symphony](./keycodes-symphony.js)**
+7. **[mouse-trap](./mouse-trap.js)**
+8. **[pick-and-click](./pick-and-click.js)**
+9. **[gossip-grid](./gossip-grid.js)**
+10. **[where-do-we-go](./where-do-we-go.js)**
+
+### SORTABLE
+1. **[sortable (Teamwork)](https://learn.zone01dakar.sn/git/fmokomba/sortable.git)**
+
+### OBJECT
+1. **[get-them-all](./get-them-all.js)**
+2. **[get-them-all](./get-them-all.js)**
+3. **[get-them-all](./get-them-all.js)**
+4. **[get-them-all](./get-them-all.js)**
+5. **[get-them-all](./get-them-all.js)**
+6. **[get-them-all](./get-them-all.js)**
+7. **[get-them-all](./get-them-all.js)**
+8. **[get-them-all](./get-them-all.js)**
+9. **[get-them-all](./get-them-all.js)**
+10. **[get-them-all](./get-them-all.js)**
+11. **[get-them-all](./get-them-all.js)**
+12. **[get-them-all](./get-them-all.js)**
+13. **[get-them-all](./get-them-all.js)**
+14. **[get-them-all](./get-them-all.js)**
+15. **[get-them-all](./get-them-all.js)**
+16. **[get-them-all](./get-them-all.js)**
 
 ### Credits
-###### &copy; ***Franchis Janel MOKOMBA*** Powered by ***Zone01 Dakar***
+###### &copy; ***Franchis Janel MOKOMBA*** - Powered by ***Zone01 Dakar***
