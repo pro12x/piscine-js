@@ -94,17 +94,17 @@
 1. **[sortable (Teamwork)](https://learn.zone01dakar.sn/git/fmokomba/sortable.git)**
 
 ### OBJECT
-1. **[get-them-all](./get-them-all.js)**
-2. **[get-them-all](./get-them-all.js)**
-3. **[get-them-all](./get-them-all.js)**
-4. **[get-them-all](./get-them-all.js)**
-5. **[get-them-all](./get-them-all.js)**
-6. **[get-them-all](./get-them-all.js)**
-7. **[get-them-all](./get-them-all.js)**
-8. **[get-them-all](./get-them-all.js)**
-9. **[get-them-all](./get-them-all.js)**
-10. **[get-them-all](./get-them-all.js)**
-11. **[get-them-all](./get-them-all.js)**
+1. **[invert](./invert.js)**
+2. **[pick-omit](./pick-omit.js)**
+3. **[fusion](./fusion.js)**
+4. **[manipulate-values](./manipulate-values.js)**
+5. **[manipulate-keys](./manipulate-keys.js)**
+6. **[manipulate-entries](./manipulate-entries.js)**
+7. **[curry-entries](./curry-entries.js)**
+8. **[deep-copy](./deep-copy.js)**
+9. **[replica](./replica.js)**
+10. **[pronoun](./pronoun.js)**
+11. **[neuron](./neuron.js)**
 12. **[get-them-all](./get-them-all.js)**
 13. **[get-them-all](./get-them-all.js)**
 14. **[get-them-all](./get-them-all.js)**
