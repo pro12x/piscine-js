@@ -112,6 +112,10 @@
 2. **[throttle](./throttle.js)**
 3. **[interpolation](./interpolation.js)**
 4. **[keep-trying-or-giveup](./keep-trying-or-giveup.js)**
+5. **[get-json](./get-json.js)**
+6. **[is-winner](./is-winner.js)**
+7. **[gougle-search](./gougle-search.js)**
+8. **[all](./all.js)**
 
 ### CLONENEWS
 1. **[clonenews (Teamwork)](https://learn.zone01dakar.sn/git/...)**
