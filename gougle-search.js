@@ -26,15 +26,15 @@
  */
 
 async function queryServers(serverName, q) {
-    try {
-        const servers = ['web', 'image', 'video'];
-        const server = servers.find((server) => server === serverName);
-        if (!server) throw Error('Server Not Found');
-        const url = `/${server}?q=${q}`;
-        const response = await fetch(url);
-        const json = await response.json();
-        return json;
-    } catch (error) {
-        if (error.message === 'Server Not Found') return Error('Server Not Found');
+    const uri1 = `/${serverName}?q=${encodeURI(q)}`
+    const uri2 = `/${serverName}_backup?q=${encodeURI(q)}`
+    return await Promise.race([getJSON(uri1), getJSON(uri2)])
+}
+
+async function gougleSearch(q) {
+    return {
+        web: await Promise.race([queryServers('web', q), (new Promise((resolve, reject) => setTimeout(reject, 80, new Error('timeout'))))]),
+        image: await Promise.race([queryServers('image', q), (new Promise((resolve, reject) => setTimeout(reject, 80, new Error('timeout'))))]),
+        video: await Promise.race([queryServers('video', q), (new Promise((resolve, reject) => setTimeout(reject, 80, new Error('timeout'))))]),
     }
 }
