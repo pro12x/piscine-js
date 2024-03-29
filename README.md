@@ -91,7 +91,7 @@
 10. **[where-do-we-go](./where-do-we-go.js)**
 
 ### SORTABLE
-1. **[sortable (Teamwork)](https://learn.zone01dakar.sn/git/fmokomba/sortable.git)**
+1. **[sortable (Teamwork)](https://learn.zone01dakar.sn/git/fmokomba/sortable)**
 
 ### OBJECT
 1. **[invert](./invert.js)**
@@ -109,6 +109,11 @@
 
 ### ASYNC
 1. **[debounce](./debounce.js)**
+2. **[throttle](./throttle.js)**
+3. **[interpolation](./interpolation.js)**
+4. **[keep-trying-or-giveup](./keep-trying-or-giveup.js)**
 
+### CLONENEWS
+1. **[clonenews (Teamwork)](https://learn.zone01dakar.sn/git/...)**
 ### Credits
 ###### &copy; ***Franchis Janel MOKOMBA*** - Powered by ***Zone01 Dakar***
