@@ -105,11 +105,7 @@
 9. **[replica](./replica.js)**
 10. **[pronoun](./pronoun.js)**
 11. **[neuron](./neuron.js)**
-12. **[get-them-all](./get-them-all.js)**
-13. **[get-them-all](./get-them-all.js)**
-14. **[get-them-all](./get-them-all.js)**
-15. **[get-them-all](./get-them-all.js)**
-16. **[get-them-all](./get-them-all.js)**
+12. **[flagger](./flagger.js)**
 
 ### Credits
 ###### &copy; ***Franchis Janel MOKOMBA*** - Powered by ***Zone01 Dakar***

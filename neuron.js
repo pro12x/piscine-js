@@ -30,19 +30,59 @@
     }
  */
 
-const neuron = (data) => {
-    let tab1 = []
-    data.forEach((val, index) => {
-        const [left, right] = val.split(' - ')
-        const [leftType, leftContent] = left.split(': ')
-        const [rightType, rightContent] = right.split(': ')
-        tab1.push(leftType.toLowerCase())
-        console.log(leftType, '-', leftContent)
+const splitArray = (tab = []) => {
+    let statement = tab.slice(1).join(' ').split('-')[0].slice(0, -1);
+    let response = tab
+        .join(' ')
+        .split('-')
+        .slice(1)
+        .join('-')
+        .slice(1)
+        .split(' ')
+        .slice(1)
+        .join(' ');
+    return [statement, response];
+}
+
+const neuron = (tab = []) => {
+    const result = {};
+    tab.forEach(item => {
+        let str = item.split(' ');
+        if (/questions:/i.test(str[0])) {
+            result['questions'] ||= {};
+            let [question, response] = splitArray(str);
+            let questionKey = question
+                .replaceAll(' ', '_')
+                .replace('?', '')
+                .toLowerCase();
+            result['questions'][questionKey] ||= {};
+            result['questions'][questionKey]['question'] = question;
+            result['questions'][questionKey]['responses'] ||= [];
+            result['questions'][questionKey]['responses'].push(response);
+        }
+        if (/orders:/i.test(str[0])) {
+            let [order, response] = splitArray(str);
+            result['orders'] ||= {};
+            let orderKey = order
+                .replaceAll(' ', '_')
+                .replace('!', '')
+                .toLowerCase();
+            result['orders'][orderKey] ||= {};
+            result['orders'][orderKey]['order'] = order;
+            result['orders'][orderKey]['responses'] ||= [];
+            result['orders'][orderKey]['responses'].push(response);
+        }
+        if (/affirmations:/i.test(str[0])) {
+            let [affirmation, response] = splitArray(str);
+            result['affirmations'] ||= {};
+            let affirmationKey = affirmation.replaceAll(' ', '_').toLowerCase();
+            result['affirmations'][affirmationKey] ||= {};
+            result['affirmations'][affirmationKey]['affirmation'] = affirmation;
+            result['affirmations'][affirmationKey]['responses'] ||= [];
+            result['affirmations'][affirmationKey]['responses'].push(response);
+        }
     })
-    console.log(tab1)
-    tab1 = [...new Set(tab1)]
-    console.log(tab1)
-    return { questions: {}, orders: {} }
+    return result;
 }
 
 const data = [
@@ -87,4 +127,4 @@ neuron([
 
 document.body.appendChild(pre)*/
 
-console.log(neuron(data))
+//console.log(neuron(data))
