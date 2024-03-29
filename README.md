@@ -107,5 +107,8 @@
 11. **[neuron](./neuron.js)**
 12. **[flagger](./flagger.js)**
 
+### ASYNC
+1. **[debounce](./debounce.js)**
+
 ### Credits
 ###### &copy; ***Franchis Janel MOKOMBA*** - Powered by ***Zone01 Dakar***
