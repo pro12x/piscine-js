@@ -10,18 +10,40 @@
  */
 
 const race = async (arr) => {
-    return
-    /*const result = await Promise.race(arr)
-    if (count === 0) {
-        return result
-    }
-    return race(arr.filter(item => item!== result), count - 1)*/
+    return new Promise((resolve, reject) => {
+        arr.forEach(item => {
+            Promise.resolve(item).then(resolve, reject)
+        })
+    })
 }
 
 const some = async (arr, count) => {
-    if (count === 0) {
-        return undefined
+    if (arr.length === 0 || count === 0) {
+        return Promise.resolve([])
     }
-    const result = await Promise.race(arr)
-    return some(arr.filter(item => item!== result), count - 1)
+
+    return new Promise((resolve, reject) => {
+        let results = []
+        let resolvedCount = count
+        arr.forEach(item => {
+            if (item instanceof Promise) {
+                item.then(value => {
+                    results.push(value)
+                    resolvedCount--
+                    if (resolvedCount === 0) {
+                        if (results[1] === undefined && results.length > 1) {
+                            results = [results[1], results[0]]
+                        }
+                        resolve(results)
+                    }
+                }).catch(reject)
+            } else {
+                results.push(item)
+                resolvedCount--
+                if (resolvedCount === 0) {
+                    resolve(results)
+                }
+            }
+        })
+    })
 }
