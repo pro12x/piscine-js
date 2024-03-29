@@ -117,6 +117,7 @@
 7. **[gougle-search](./gougle-search.js)**
 8. **[all](./all.js)**
 9. **[series](./series.js)**
+10. **[race](./race.js)**
 
 ### CLONENEWS
 1. **[clonenews (Teamwork)](https://learn.zone01dakar.sn/git/...)**
