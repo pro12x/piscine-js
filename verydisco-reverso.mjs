@@ -20,7 +20,7 @@ const verydiscoReverso = async (fileName) => {
         const content = await readFile(fileName, 'utf8')
         let result = ''
         content.split(' ').forEach(word => {
-            const start = Math.ceil(word.length / 2)
+            const start = Math.floor(word.length / 2)
             const first = word.slice(0, start)
             const second = word.slice(start)
             result += second + first + ' '
