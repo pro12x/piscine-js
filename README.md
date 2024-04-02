@@ -128,6 +128,7 @@
 3. **[verydisco-reverso](./verydisco-reverso.mjs)**
 4. **[tell-me-how-many](./tell-me-how-many.mjs)**
 5. **[tell-me-who](./tell-me-who.mjs)**
+6. **[tell-me-vip](./tell-me-vip.mjs)**
 
 
 ### Credits
