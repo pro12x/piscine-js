@@ -9,7 +9,7 @@
         Display a fullscreen-size <section> for each place. Use the pics hosted in the ./where-do-we-go_images folder below. Set the background attribute with the corresponding image URL. The URL has to be formatted like so: ./where-do-we-go_images/name-of-the-place.jpg.
         Display a location indicator as an <a> tag in the middle of the screen. It should:
         have the class location
-        display the name and coordinates of the current place, as text strings separated by \n
+        display the name and coordinates of the currentPost place, as text strings separated by \n
         set the text color as color
         update the name, coordinates and color on scroll, at the point when the next image reaches the middle of the screen height
         make the href attribute open a new tab redirecting to a Google Maps URL with the coordinates of the place currently displayed

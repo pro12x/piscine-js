@@ -14,7 +14,7 @@
     The luminosity value will be displayed in the bottom left corner of the screen, in a div with the class luminosity and text.
     When the mouse is clicked, the value of the hsl will need to be copied to the clipboard.
 
-    Two SVG lines with ids axisX and axisY will need to follow the cursor, like really long cross hairs.
+    Two SVG lines with IDs axisX and axisY will need to follow the cursor, like really long cross hairs.
 
     the axisX attributes x1 and x2 need to be set to the X position of the cursor.
     the axisY attributes y1 and y2 need to be set to the Y position of the cursor.
