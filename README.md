@@ -119,11 +119,12 @@
 9. **[series](./series.js)**
 10. **[race](./race.js)**
 
-### CLONENEWS
+### CLONERNEWS
 1. **[clonenews (Teamwork)](https://learn.zone01dakar.sn/git/...)**
 
 ### NODE
-1. **[test](./test.js)**
+1. **[verydisco](./verydisco.mjs)**
+2. **[verydisco-forever](./verydisco-forever.mjs)
 
 
 ### Credits

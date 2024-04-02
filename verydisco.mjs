@@ -1,6 +1,7 @@
 import { argv } from "node:process";
 let argsArray = argv.slice(2, 3);
 let splitArgs = argsArray[0].split(" ");
+
 const verydisco = (splitArgs) => {
     let result = ''
     splitArgs.forEach(word => {
