@@ -16,17 +16,23 @@ let args = argv.slice(2, 3)
 //console.log(args)
 
 const verydiscoReverso = async (fileName) => {
-    const content = await readFile(fileName, 'utf8')
+    try {
+        const content = await readFile(fileName, 'utf8')
+        let result = ''
+        content.split(' ').forEach(word => {
+            const start = Math.ceil(word.length / 2)
+            const first = word.slice(0, start)
+            const second = word.slice(start)
+            result += second + first + ' '
+            //console.log(word, start, first, second, result.trim())
+        })
+        console.log(result)
+    } catch (error) {
+        console.error(error)
+    }
     //console.log(content)
-    let result = ''
-    content.split(' ').forEach(word => {
-        const start = Math.ceil(word.length / 2)
-        const first = word.slice(0, start)
-        const second = word.slice(start)
-        result += second + first + ' '
-        //console.log(word, start, first, second, result.trim())
-    })
-    console.log(result)
+
 }
 
-console.log(await verydiscoReverso(args[0]))
+//console.log(await verydiscoReverso(args[0]))
+await verydiscoReverso(args[0])
