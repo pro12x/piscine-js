@@ -124,7 +124,10 @@
 
 ### NODE
 1. **[verydisco](./verydisco.mjs)**
-2. **[verydisco-forever](./verydisco-forever.mjs)
+2. **[verydisco-forever](./verydisco-forever.mjs)**
+3. **[verydisco-reverso](./verydisco-reverso.mjs)**
+4. **[tell-me-how-many](./tell-me-how-many.mjs)**
+5. **[tell-me-who](./tell-me-who.mjs)**
 
 
 ### Credits
