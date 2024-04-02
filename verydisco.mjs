@@ -1,7 +1,7 @@
 import { argv } from "node:process";
 let argsArray = argv.slice(2, 3);
 let splitArgs = argsArray[0].split(" ");
-const veryDisco = (splitArgs) => {
+const verydisco = (splitArgs) => {
     let result = ''
     splitArgs.forEach(word => {
         const start = Math.ceil(word.length / 2)
@@ -15,4 +15,4 @@ const veryDisco = (splitArgs) => {
     })
     return result
 }
-console.log(veryDisco(splitArgs))
+console.log(verydisco(splitArgs))
