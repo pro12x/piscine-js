@@ -1,98 +1,94 @@
-'use strict';
+import { readFile, writeFile, rm } from "fs/promises";
 
-import { readdir, readFile, writeFile } from "fs/promises";
-import { existsSync } from "fs";
+const filename = (!process.argv[2] || process.argv[2].length === 0) ? 'help' : process.argv[2];
 
-const guestDirectory = process.argv[2] ?? './guests';
-const fileShoppingList = process.argv[3] ?? 'shopping-list.json';
+const option = process.argv[3] ?? 'help';
+const item = process.argv[4];
+const numberString = process.argv[5];
 
-let drinkWishers = {
-    beer: 0,
-    wine: 0,
-    water: 0,
-    soft: 0,
+async function createFile(filename) {
+    await writeFile(filename, JSON.stringify({}));
 }
-    , foodWishers = {
-    eggplants: 0,
-    mushrooms: 0,
-    hummus: 0,
-    courgettes: 0,
-    burgers: 0,
-    sardines: 0,
-    kebabs: 0,
-    potatoes: 0,
-}
-    , guestsCounter = 0;
 
-async function main() {
-    let shoppingList = {};
-    if (existsSync(fileShoppingList)) {
+async function removeFile(filename) {
+    await rm(filename, { force: true });
+}
+
+async function printShopList(filename) {
+    readFile(filename).then((content) => {
         try {
-            const content = await readFile(fileShoppingList);
-            shoppingList = content.length > 0 ? JSON.parse(content) : {};
-        } catch (err) {
-            console.error(new Error(`fail parsing shopping list in ${fileShoppingList}: ${err}\n a new list will be created`));
-        }
-    }
-
-    const filenames = (await readdir(guestDirectory)).filter(filename => filename.endsWith('.json'));
-    for (const fileName of filenames) {
-        const guestInfo = JSON.parse(await readFile(`${guestDirectory}/${fileName}`));
-        if (guestInfo.answer === 'yes') {
-            guestsCounter++;
-            foodWishers.potatoes++;
-            if (guestInfo.drink) {
-                drinkWishers[guestInfo.drink]++;
-            }
-            if (guestInfo.food) {
-                switch (guestInfo.food) {
-                    case 'veggie':
-                    case 'vegan':
-                        foodWishers.mushrooms += 3;
-                        foodWishers.eggplants++;
-                        foodWishers.hummus++;
-                        foodWishers.courgettes++;
-                        break;
-                    case 'carnivore':
-                        foodWishers.burgers++;
-                        break;
-                    case 'fish':
-                        foodWishers.sardines++;
-                        break;
-                    case 'everything':
-                        foodWishers.kebabs++;
-                        break;
-                }
-            }
-        }
-    }
-
-    if (!guestsCounter) {
-        console.log('No one is coming.');
-        return;
-    }
-
-    if (drinkWishers.beer) {
-        shoppingList['6-packs-beers'] = Math.ceil(drinkWishers.beer / 6);
-    }
-    for (let product of ['water', 'wine', 'soft']) {
-        if (drinkWishers[product]) {
-            shoppingList[`${product}-bottles`] = Math.ceil(drinkWishers[product] / 4);
-        }
-    }
-
-    for (let product of ['eggplants', 'mushrooms', 'hummus', 'courgettes']) {
-        if (foodWishers[product]) {
-            shoppingList[product] = Math.ceil(foodWishers[product] / 3);
-        }
-    }
-    for (let product of ['burgers', 'sardines', 'kebabs', 'potatoes']) {
-        if (foodWishers[product]) {
-            shoppingList[product] = Math.ceil(foodWishers[product]);
-        }
-    }
-
-    await writeFile(fileShoppingList, JSON.stringify(shoppingList));
+            let items = Object.entries(JSON.parse(content.toString()));
+            if (items.length === 0) { console.log(`Empty list.`); return; }
+            let listOutputForm = items.reduce((resStr, [name, quantity]) => `${resStr}- ${name} (${quantity})\n`, '');
+            console.log(listOutputForm)
+        } catch (e) { console.error('Invalide format of the list: ' + e.message); }
+    }).catch(e => console.error('Cannot read list: ' + e.message));
 }
 
-main().catch(console.error);
+async function addItem(filename, item, number) {
+    readFile(filename)
+        .then((content) => {
+            if (content.length === 0) { return { [item]: number } }
+            let items = JSON.parse(content);
+            if (!items[item]) { items[item] = number; return items; }
+            items[item] += number;
+            return items;
+        })
+        .then((items) => { writeFile(filename, JSON.stringify(items)); })
+        .catch((e) => { console.error('Invalide format of the list: ' + e.message); });
+}
+
+
+async function rmItem(filename, item, number) {
+    readFile(filename)
+        .then((content) => {
+            let items = JSON.parse(content);
+            if (!items[item]) return false;
+            if (items[item] <= number) {
+                delete items[item];
+            } else {
+                items[item] -= number;
+            }
+            return items;
+
+        })
+        .then((items) => {
+            if (items !== false) {
+                writeFile(filename, JSON.stringify(items));
+            }
+        })
+        .catch((e) => { console.error('Invalide format of the list: ' + e.message); });
+}
+
+function printHelp() {
+    console.log(
+        ` Commands:
+- create: takes a filename as argument and create it (should have '.json' extension specified)
+- delete: takes a filename as argument and delete it
+- ls: takes a filename as argument and print a list from the file in the console
+- add: add a new element to the list in the file; takes a number as element's quantity, default: 1
+- rm: decrease a given quantity of the element on the list in the file, if no quantity is specified it will remove the element from the list
+- help: print this message`
+    )
+}
+//----------------------------------------------------//
+if (filename == 'help' || option == 'help') { printHelp(); process.exit(); }
+
+let number = parseInt(numberString);
+switch (option) {
+    case 'create': await createFile(filename); break;
+    case 'delete': await removeFile(filename); break;
+    case 'ls': await printShopList(filename); break;
+    case 'add':
+        if (!item) { console.error('No elem specified.'); break; }
+        if (!number) number = 1;
+        if (number < 0) { await rmItem(filename, item, -number) } else { await addItem(filename, item, number); }
+        break;
+    case 'rm':
+        if (!item) { console.error('No elem specified.'); break }
+        if (numberString === undefined) { await rmItem(filename, item, Infinity); break; }
+        if (isNaN(number)) { console.error('Unexpected request: nothing has been removed'); break }
+        if (number < 0) { await addItem(filename, item, -number) } else { await rmItem(filename, item, number); }
+        break;
+    default: console.error('Invalid option: ' + option);
+}
