@@ -48,115 +48,101 @@ Node process: exit
 
  */
 
-import fs from 'fs/promises';
+'use strict';
 
-async function parseGuestDirectory(directoryPath) {
-    try {
-        const guests = await fs.readdir(directoryPath);
-        const vipGuests = [];
+import { readdir, readFile, writeFile } from "fs/promises";
+import { existsSync } from "fs";
 
-        for (const guest of guests) {
-            const guestResponse = await fs.readFile(`${directoryPath}/${guest}`, 'utf-8');
-            const responseObj = JSON.parse(guestResponse);
+const guestDirectory = process.argv[2] ?? './guests';
+const fileShoppingList = process.argv[3] ?? 'shopping-list.json';
 
-            if (responseObj.answer === 'yes') {
-                vipGuests.push(responseObj);
-            }
-        }
-
-        return vipGuests;
-    } catch (error) {
-        console.error(`Error parsing guest directory: ${error.message}`);
-        process.exit(1);
-    }
+let drinkWishers = {
+    beer: 0,
+    wine: 0,
+    water: 0,
+    soft: 0,
 }
-
-function calculateQuantities(vipGuests) {
-    const drinkCategories = ['Beers', 'Water', 'Wine', 'Softs'];
-    const foodCategories = ['Veggies', 'Vegans', 'Carnivores', 'Fish lovers', 'Omnivores'];
-
-    const quantities = {
-        '6-packs-beers': 0,
-        'wine-bottles': 0,
-        'water-bottles': 0,
-        'soft-bottles': 0,
-        eggplants: 0,
-        mushrooms: 0,
-        hummus: 0,
-        courgettes: 0,
-        burgers: 0,
-        sardines: 0,
-        kebabs: 0,
-        potatoes: 0,
-    };
-
-    vipGuests.forEach((guest) => {
-        if (guest.answer === 'yes') {
-            drinkCategories.forEach((category) => {
-                if (guest.drink && guest.drink.toLowerCase() === category.toLowerCase()) {
-                    quantities[`${category.toLowerCase()}-bottles`] += 1;
-                }
-            });
-
-            foodCategories.forEach((category) => {
-                if (guest.food && guest.food.toLowerCase() === category.toLowerCase()) {
-                    quantities[category.toLowerCase()] += 1;
-                }
-            });
-        }
-    });
-
-    quantities['potatoes'] = quantities['eggplants'] + quantities['mushrooms'] + quantities['hummus'] + quantities['courgettes'];
-
-    return quantities;
+    , foodWishers = {
+    eggplants: 0,
+    mushrooms: 0,
+    hummus: 0,
+    courgettes: 0,
+    burgers: 0,
+    sardines: 0,
+    kebabs: 0,
+    potatoes: 0,
 }
-
-
-async function updateShoppingList(shoppingListFile, quantities) {
-    try {
-        let shoppingList = {};
-
-        // Check if the shopping list file exists, and if so, load its content
-        try {
-            const data = await fs.readFile(shoppingListFile, 'utf-8');
-            shoppingList = JSON.parse(data);
-        } catch (error) {
-            // If the file doesn't exist, shoppingList remains an empty object
-        }
-
-        // Update the shopping list with calculated quantities
-        for (const key in quantities) {
-            if (quantities[key] > 0) {
-                shoppingList[key] = quantities[key];
-            }
-        }
-
-        // Write the updated shopping list to the file
-        await fs.writeFile(shoppingListFile, JSON.stringify(shoppingList, null, 2));
-        console.log('Shopping list updated successfully!');
-    } catch (error) {
-        console.error(`Error updating shopping list: ${error.message}`);
-        process.exit(1);
-    }
-}
+    , guestsCounter = 0;
 
 async function main() {
-    if (process.argv.length !== 4) {
-        console.error('Usage: happiness-manager.mjs <guestDirectory> <shoppingList.json>');
-        process.exit(1);
+    let shoppingList = {};
+    if (existsSync(fileShoppingList)) {
+        try {
+            const content = await readFile(fileShoppingList);
+            shoppingList = content.length > 0 ? JSON.parse(content) : {};
+        } catch (err) {
+            console.error(new Error(`fail parsing shopping list in ${fileShoppingList}: ${err}\n a new list will be created`));
+        }
     }
 
-    const guestDirectory = process.argv[2];
-    const shoppingListFile = process.argv[3];
+    const filenames = (await readdir(guestDirectory)).filter(filename => filename.endsWith('.json'));
+    for (const fileName of filenames) {
+        const guestInfo = JSON.parse(await readFile(`${guestDirectory}/${fileName}`));
+        if (guestInfo.answer === 'yes') {
+            guestsCounter++;
+            foodWishers.potatoes++;
+            if (guestInfo.drink) {
+                drinkWishers[guestInfo.drink]++;
+            }
+            if (guestInfo.food) {
+                switch (guestInfo.food) {
+                    case 'veggie':
+                    case 'vegan':
+                        foodWishers.mushrooms += 3;
+                        foodWishers.eggplants++;
+                        foodWishers.hummus++;
+                        foodWishers.courgettes++;
+                        break;
+                    case 'carnivore':
+                        foodWishers.burgers++;
+                        break;
+                    case 'fish':
+                        foodWishers.sardines++;
+                        break;
+                    case 'everything':
+                        foodWishers.kebabs++;
+                        break;
+                }
+            }
+        }
+    }
 
-    const vipGuests = await parseGuestDirectory(guestDirectory);
-    if (vipGuests.length === 0) {
+    if (!guestsCounter) {
         console.log('No one is coming.');
         return;
     }
 
-    const quantities = calculateQuantities(vipGuests);
-    await updateShoppingList(shoppingListFile, quantities);
+    if (drinkWishers.beer) {
+        shoppingList['6-packs-beers'] = Math.ceil(drinkWishers.beer / 6);
+    }
+    for (let product of ['water', 'wine', 'soft']) {
+        if (drinkWishers[product]) {
+            shoppingList[`${product}-bottles`] = Math.ceil(drinkWishers[product] / 4);
+        }
+    }
+
+    for (let product of ['eggplants', 'mushrooms', 'hummus', 'courgettes']) {
+        if (foodWishers[product]) {
+            shoppingList[product] = Math.ceil(foodWishers[product] / 3);
+        }
+    }
+    for (let product of ['burgers', 'sardines', 'kebabs', 'potatoes']) {
+        if (foodWishers[product]) {
+            shoppingList[product] = Math.ceil(foodWishers[product]);
+        }
+    }
+
+    await writeFile(fileShoppingList, JSON.stringify(shoppingList));
 }
 
-main();
+main().catch(console.error);
