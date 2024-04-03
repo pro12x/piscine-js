@@ -129,6 +129,12 @@
 4. **[tell-me-how-many](./tell-me-how-many.mjs)**
 5. **[tell-me-who](./tell-me-who.mjs)**
 6. **[tell-me-vip](./tell-me-vip.mjs)**
+7. **[tell-it-cypher](./tell-it-cypher.mjs)**
+8. **[friend-support](./friend-support.mjs)**
+9. **[uninvited](./uninvited.mjs)**
+10. **[gatecrashers](./gatecrashers.mjs)**
+11. **[personal-shopper](./personal-shopper.mjs)**
+12. **[happiness-manager](./happiness-manager.mjs)**
 
 
 ### Credits
