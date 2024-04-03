@@ -48,8 +48,6 @@ Node process: exit
 
  */
 
-#!/usr/bin/env node
-
 import fs from 'fs/promises';
 
 async function parseGuestDirectory(directoryPath) {
