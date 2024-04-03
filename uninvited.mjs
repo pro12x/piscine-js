@@ -31,7 +31,8 @@ import * as fs from 'node:fs';
 const port = 5000;
 
 // Create HTTP server
-const server = http.createServer((req, res) => {
+const server = http.createServer((req,
+                                  ) => {
     if (req.method === 'POST') {
         let body = '';
         req.on('data', chunk => {
