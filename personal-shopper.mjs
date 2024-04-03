@@ -1,98 +1,106 @@
-import fs from 'fs/promises';
-import path from 'path';
+'use strict';
 
-async function readGuestResponses(directory) {
-    const files = await fs.readdir(directory);
-    const responses = [];
-    for (const file of files) {
-        if (file.endsWith('.json')) {
-            const filePath = path.join(directory, file);
-            const data = await fs.readFile(filePath, 'utf-8');
-            const guestResponse = JSON.parse(data);
-            if (guestResponse.answer === 'yes') {
-                responses.push(guestResponse);
-            }
+import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { existsSync } from "fs";
+
+const guestDirectory = process.argv[2] ?? './guests';
+const fileShoppingList = process.argv[3] ?? 'shopping-list.json';
+
+let drinkWishers = {
+    beer: 0,
+    wine: 0,
+    water: 0,
+    soft: 0,
+}
+    , foodWishers = {
+    eggplants: 0,
+    mushrooms: 0,
+    hummus: 0,
+    courgettes: 0,
+    burgers: 0,
+    sardines: 0,
+    kebabs: 0,
+    potatoes: 0,
+}
+    , guestsCounter = 0
+
+function handleTheGuest(guestInfo) {
+    if (guestInfo.answer === 'yes') {
+        guestsCounter++;
+        foodWishers.potatoes++;
+        if (guestInfo.drink) {
+            drinkWishers[guestInfo.drink]++;
+        }
+        switch (guestInfo.food) {
+            case 'veggie':
+            case 'vegan':
+                foodWishers.mushrooms += 3;
+                foodWishers.eggplants++;
+                foodWishers.hummus++;
+                foodWishers.courgettes++;
+                break;
+            case 'carnivore':
+                foodWishers.burgers++;
+                break;
+            case 'fish':
+                foodWishers.sardines++;
+                break;
+            case 'everything':
+                foodWishers.kebabs++;
+                break;
         }
     }
-    return responses;
 }
 
-function categorizePreferences(responses) {
-    const categories = {
-        drinks: {
-            beers: 0,
-            water: 0,
-            wine: 0,
-            softs: 0
-        },
-        food: {
-            veggies: 0,
-            vegans: 0,
-            carnivores: 0,
-            fishLovers: 0,
-            omnivores: 0,
-            potatoes: 0
-        }
-    };
 
-    for (const response of responses) {
-        if (response.drink) {
-            if (response.drink.includes('beer')) categories.drinks.beers++;
-            if (response.drink.includes('water')) categories.drinks.water++;
-            if (response.drink.includes('wine')) categories.drinks.wine++;
-            if (response.drink.includes('soft')) categories.drinks.softs++;
-        }
-        if (response.food) {
-            if (response.food.includes('veggie') || response.food.includes('vegan')) categories.food.veggies++;
-            if (response.food.includes('carnivore')) categories.food.carnivores++;
-            if (response.food.includes('fish')) categories.food.fishLovers++;
-            if (response.food.includes('omnivore')) categories.food.omnivores++;
-        }
-        categories.food.potatoes++; // Everyone gets potatoes
-    }
 
-    return categories;
+// read a shopping cart from the file or create a new one
+let shoppingList = {};
+if (existsSync(fileShoppingList)) {
+    shoppingList = await readFile(fileShoppingList)
+        .then((content) => content.length > 0 ? JSON.parse(content) : {})
+        .catch((err) => {
+            console.error(new Error(`fail parsing shopping list in ${fileShoppingList}: ${err}\n a new list will be created`));
+        });
 }
 
-function calculateQuantities(categories) {
-    const quantities = {};
-    for (const category in categories) {
-        for (const item in categories[category]) {
-            const quantity = Math.ceil(categories[category][item] / 4); // Rounded up to the nearest whole number
-            quantities[`${item}-${category}`] = quantity;
-        }
-    }
-    return quantities;
+// read guests' files and sort out their content
+const filenames = (await readdir(guestDirectory)).filter(filename => filename.endsWith('.json'));
+const promisesHandleGuests = filenames.map(
+    fileName => readFile(`${guestDirectory}/${fileName}`)
+        .then((content) => JSON.parse(content))
+        .then(handleTheGuest)
+);
+await Promise.all(promisesHandleGuests);
+
+if (!guestsCounter) {
+    console.log('No one is coming.');
+    process.exit(0);
 }
 
-async function updateShoppingList(fileName, quantities) {
-    let shoppingList = {};
-    try {
-        const data = await fs.readFile(fileName, 'utf-8');
-        shoppingList = JSON.parse(data);
-    } catch (error) {
-        if (error.code !== 'ENOENT') throw error;
-    }
-
-    for (const item in quantities) {
-        shoppingList[item] = quantities[item];
-    }
-
-    await fs.writeFile(fileName, JSON.stringify(shoppingList, null, 2));
+if (!shoppingList) {
+    process.exit(0);
 }
 
-async function main(directory, shoppingListFileName) {
-    const responses = await readGuestResponses(directory);
-    if (responses.length === 0) {
-        console.log('No one is coming.');
-        return;
+// create the shopping list using the data picked from the guests' files
+if (drinkWishers.beer) {
+    shoppingList['6-packs-beers'] = Math.ceil(drinkWishers.beer / 6);
+}
+for (let product of ['water', 'wine', 'soft']) {
+    if (drinkWishers[product]) {
+        shoppingList[`${product}-bottles`] = Math.ceil(drinkWishers[product] / 4);
     }
-
-    const categories = categorizePreferences(responses);
-    const quantities = calculateQuantities(categories);
-    await updateShoppingList(shoppingListFileName, quantities);
-    console.log('Shopping list updated successfully.');
 }
 
-// Example usage
-main('./guests', './shoppingList.json');
+for (let product of ['eggplants', 'mushrooms', 'hummus', 'courgettes']) {
+    if (foodWishers[product]) {
+        shoppingList[product] = Math.ceil(foodWishers[product] / 3);
+    }
+}
+for (let product of ['burgers', 'sardines', 'kebabs', 'potatoes']) {
+    if (foodWishers[product]) {
+        shoppingList[product] = Math.ceil(foodWishers[product]);
+    }
+}
+
+await writeFile(fileShoppingList, JSON.stringify(shoppingList));
